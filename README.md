@@ -17,7 +17,7 @@ change type to module from commonjs
 
        "type": "module",
 <p>
-//initialize typescript
+initialize typescript
 </p>
 
      npm i -g typescript
