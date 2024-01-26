@@ -16,12 +16,14 @@ change type to module from commonjs
 </p>
 
        "type": "module",
+
 <p>
 initialize typescript
 </p>
 
      npm i -g typescript
      pnpm tsc --init
+
 <p>
 changes commit to tsconfig.json:-
 </p>
@@ -31,9 +33,9 @@ changes commit to tsconfig.json:-
      "target": "ES2020",
      "module": "NodeNext",
      "moduleResolution": "NodeNext",
-     "rootDir": "./src",  
+     "rootDir": "./src",
      "outDir": "./dist",
-     "strict": true,  
+     "strict": true,
       }
     }
 
@@ -48,7 +50,7 @@ create .gitignore file on root level
     npm-debug.log*
     yarn-debug.log*
     yarn-error.log*
-  
+
 <p>
 create src folder & file name app.ts or frnzserver.ts
 </p>
@@ -57,6 +59,7 @@ Install dependencies
 </p>
 
     pnpm add express dotenv cors
+
 <p>
 Install Dev dependencies
 </p>
@@ -121,3 +124,13 @@ put code on app.ts
 
     pnpm dev
 
+<p>
+  basic prettier config
+
+     "singleQuote":false ,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true
+
+</p>
