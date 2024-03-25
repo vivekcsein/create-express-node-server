@@ -58,14 +58,14 @@ create src folder & file name app.ts or frnzserver.ts
 Install dependencies
 </p>
 
-    pnpm add express dotenv cors
+    pnpm add express dotenv cors date-fns
 
 <p>
 Install Dev dependencies
 </p>
 
-    pnpm add --save-dev @types/express @types/node @types/cors
-    pnpm add --save-dev typescript nodemon rimraf concurrently
+    pnpm add --save-dev @types/express @types/node @types/cors @types/uuid
+    pnpm add --save-dev typescript nodemon rimraf concurrently uuid
 
 <p>
 change script in package.json to start server 
@@ -88,7 +88,7 @@ put code on app.ts
     dotenv.config();
 
     if (!process.env.SERVER_PORT) {
-    process.exit(1);
+        process.exit(1);
     }
     const PORT: number = parseInt(process.env.SERVER_PORT as string, 10) | 7164;
     const app: Express = express();
@@ -97,23 +97,24 @@ put code on app.ts
 
     //API route
     app.get('/', (req, res: Response) => {
-    res.send('Hello From Server');
+        res.send('Hello From Server');
     });
+
     // start server
     const startserver = async () => {
     try {
-    await new Promise((resolve, reject) => {
-    const server = app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    resolve("server started");
-    });
-    server.on('error', (error) => {
-    reject(error);
-    });
+        await new Promise((resolve, reject) => {
+            const server = app.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
+            resolve("server started");
+        });
+        server.on('error', (error) => {
+        reject(error);
+        });
     });
     } catch (error) {
-    console.error("Server can not start: ", error);
-    process.exit(1);
+        console.error("Server can not start: ", error);
+        process.exit(1);
       }
     }
     startserver();
@@ -127,10 +128,18 @@ put code on app.ts
 <p>
   basic prettier config
 
-     "singleQuote":false ,
+    "singleQuote":false ,
     "trailingComma": "es5",
     "tabWidth": 2,
     "useTabs": false,
     "semi": true
+
+</p>
+
+<p>update packages
+    
+    pnpm outdated
+
+    pnpm update
 
 </p>

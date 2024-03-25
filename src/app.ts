@@ -1,8 +1,9 @@
-
 import express, { Express, Response } from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
+import { indexHTML, notFound404 } from "./constants/import.js";
+import { logger } from "./middlewares/logger.js"
 
 if (!process.env.SERVER_PORT) {
     process.exit(1);
@@ -10,13 +11,33 @@ if (!process.env.SERVER_PORT) {
 const PORT: number = parseInt(process.env.SERVER_PORT as string, 10) | 7164;
 
 const app: Express = express();
+
+//logger middleware
+app.use(logger)
+
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+// Serve static files
+app.use(express.static(process.cwd() + "/public"));
 app.use(express.json());
 
+
+
 //API route
-app.get('/', (req, res: Response) => {
-    res.send('Hello From Server');
+// app.get('/', (req, res: Response) => {
+//     res.send('Hello From Server');
+// });
+
+//index page request
+app.get("^/$|/index(.html)?", (req, res: Response) => {
+    res.sendFile(indexHTML);
 });
+
+//not found page app route
+app.get("/*", (req, res: Response) => {
+    res.status(404).sendFile(notFound404);
+});
+
 
 // start server
 const startserver = async () => {
@@ -26,7 +47,7 @@ const startserver = async () => {
                 console.log(`Server running on http://localhost:${PORT}`);
                 resolve("server started");
             });
-            server.on('error', (error) => {
+            server.on("error", (error) => {
                 reject(error);
             });
         });
@@ -34,7 +55,6 @@ const startserver = async () => {
         console.error("Server can not start: ", error);
         process.exit(1);
     }
-}
+};
 
 startserver();
-
