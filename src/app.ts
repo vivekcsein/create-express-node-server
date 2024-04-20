@@ -3,17 +3,17 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
 import { indexHTML, notFound404 } from "./constants/staticHTML.js";
-import { logger } from "./middlewares/logger.js"
+import { logger } from "./middlewares/logger.js";
 
 if (!process.env.SERVER_PORT) {
-    // process.exit(1);
+  // process.exit(1);
 }
 const PORT: number = parseInt(process.env.SERVER_PORT as string, 10) | 7164;
 
 const app: Express = express();
 
 //logger middleware
-app.use(logger)
+app.use(logger);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -28,31 +28,30 @@ app.use(express.json());
 
 //index page request
 app.get("^/$|/index(.html)?", (req, res: Response) => {
-    res.sendFile(indexHTML);
+  res.sendFile(indexHTML);
 });
 
 //not found page app route
 app.get("/*", (req, res: Response) => {
-    res.status(404).sendFile(notFound404);
+  res.status(404).sendFile(notFound404);
 });
-
 
 // start server
 const startserver = async () => {
-    try {
-        await new Promise((resolve, reject) => {
-            const server = app.listen(PORT, () => {
-                console.log(`Server running on http://localhost:${PORT}`);
-                resolve("server started");
-            });
-            server.on("error", (error) => {
-                reject(error);
-            });
-        });
-    } catch (error) {
-        console.error("Server can not start: ", error);
-        process.exit(1);
-    }
+  try {
+    await new Promise((resolve, reject) => {
+      const server = app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+        resolve("server started");
+      });
+      server.on("error", (error) => {
+        reject(error);
+      });
+    });
+  } catch (error) {
+    console.error("Server can not start: ", error);
+    process.exit(1);
+  }
 };
 
 startserver();
