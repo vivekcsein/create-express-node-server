@@ -2,11 +2,11 @@ import express, { Express, Response } from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
-import { indexHTML, notFound404 } from "./constants/import.js";
+import { indexHTML, notFound404 } from "./constants/staticHTML.js";
 import { logger } from "./middlewares/logger.js"
 
 if (!process.env.SERVER_PORT) {
-    process.exit(1);
+    // process.exit(1);
 }
 const PORT: number = parseInt(process.env.SERVER_PORT as string, 10) | 7164;
 
@@ -20,8 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files
 app.use(express.static(process.cwd() + "/public"));
 app.use(express.json());
-
-
 
 //API route
 // app.get('/', (req, res: Response) => {
